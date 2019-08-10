@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         lowercase: true,
         validate(email){
-            if(!validator.isEmail(email)) throw new Error("Not a valid email address")
+            if(!validator.isEmail(email)) throw new Error("Invalid email")
         }
     },
     password: {
@@ -41,6 +41,12 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 })
 
+userSchema.virtual("tournaments", {
+    ref: "Tournament",
+    localField: "_id",
+    foreignField: "creator"
+})
+
 userSchema.methods.toJSON = function(){
     const user = this
     const userObject = user.toObject()
@@ -50,6 +56,7 @@ userSchema.methods.toJSON = function(){
 
     return userObject
 }
+
 userSchema.methods.generateAuthToken = async function(){
     const user = this
     const token = jwt.sign({_id: user._id.toString()}, "daneelfs")
