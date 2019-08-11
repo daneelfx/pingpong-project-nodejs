@@ -74,15 +74,28 @@ router.post("/tournaments/:id/players", auth, async (req, res) => {
 
 router.get("/tournaments/:id/players", auth, async (req, res) => {
     const _id = req.params.id
+    const sort = {}
+
+    if(req.query.sortBy){
+        const [score, sortOrder] = req.query.sortBy.split(":")
+        sort[score] = sortOrder === "desc" ? -1 : 1
+    }
 
     try{
-        const players = await Player.find({creator: req.user._id, belongsTo: _id})
-        if(players.length === 0)
-            return res.status(404).send({error: "there are no players"})
+        const tournament = await Tournament.findOne({_id, creator: req.user._id})
 
-        res.send(players)
+        await tournament.populate({
+            path: "players",
+            options:{
+                limit: parseInt(req.query.limit),
+                skip: parseInt(req.query.skip),
+                sort
+            }
+        }).execPopulate()
+
+        res.send(tournament.players)
     } catch(error){
-        res.status(500).send("aaa")
+        res.status(500).send()
     }
 })
 

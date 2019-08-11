@@ -23,11 +23,11 @@ const tournamentSchema = new mongoose.Schema({
     timestamps: true
 })
 
-// tournamentSchema.virtual("players", {
-//     ref: "Player",
-//     localField: "_id",
-//     foreignField: "belongsTo"
-// })
+tournamentSchema.virtual("players", {
+    ref: "Player",
+    localField: "_id",
+    foreignField: "belongsTo"
+})
 
 const Tournament = mongoose.model("Tournament", tournamentSchema)
 
