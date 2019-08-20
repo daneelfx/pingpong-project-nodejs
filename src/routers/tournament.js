@@ -4,6 +4,7 @@ const Tournament = require("../models/tournament")
 const Player = require("../models/player")
 const auth = require("../middleware/auth")
 
+// Create Tournament
 router.post("/tournaments", auth, async (req, res) => {
     const tournament = new Tournament({
         ...req.body,
@@ -18,7 +19,7 @@ router.post("/tournaments", auth, async (req, res) => {
     }
 })
 
-
+// Read Tournaments
 router.get("/tournaments", auth, async (req, res) => {
     const match = {}
     const sort = {}
@@ -51,6 +52,7 @@ router.get("/tournaments", auth, async (req, res) => {
     }
 })
 
+// Create Player
 router.post("/tournaments/:id/players", auth, async (req, res) => {
     const _id = req.params.id
     const player = new Player({
@@ -72,6 +74,7 @@ router.post("/tournaments/:id/players", auth, async (req, res) => {
     }
 })
 
+// Read Players
 router.get("/tournaments/:id/players", auth, async (req, res) => {
     const _id = req.params.id
     const sort = {}
@@ -84,9 +87,12 @@ router.get("/tournaments/:id/players", auth, async (req, res) => {
     try{
         const tournament = await Tournament.findOne({_id, creator: req.user._id})
 
+        if(!tournament)
+            return res.status(400).send()
+
         await tournament.populate({
             path: "players",
-            options:{
+            options: {
                 limit: parseInt(req.query.limit),
                 skip: parseInt(req.query.skip),
                 sort
@@ -99,6 +105,7 @@ router.get("/tournaments/:id/players", auth, async (req, res) => {
     }
 })
 
+// Delete Player
 router.delete("/tournaments/:tournamentId/players/:playerId", auth, async (req, res) => {
     const _tournamentId = req.params.tournamentId
     const _playerId = req.params.playerId
@@ -113,6 +120,7 @@ router.delete("/tournaments/:tournamentId/players/:playerId", auth, async (req, 
     }
 })
 
+// Delete Players
 router.delete("/tournaments/:id/players", auth, async (req, res) => {
     const _id = req.params.id
     try{
@@ -124,6 +132,7 @@ router.delete("/tournaments/:id/players", auth, async (req, res) => {
     }
 })
 
+// Read Tournament
 router.get("/tournaments/:id", auth, async (req, res) => {
     const _id = req.params.id
 
@@ -138,7 +147,7 @@ router.get("/tournaments/:id", auth, async (req, res) => {
     }
 })
 
-
+// Delete Tournament
 router.delete("/tournaments/:id", auth, async (req, res) => {
     const _id = req.params.id
 
