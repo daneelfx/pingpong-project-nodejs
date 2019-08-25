@@ -101,7 +101,7 @@ const upload = multer({
     }
 })
 
-// Upload Aavatar
+// Upload Avatar
 router.post("/users/me/avatar", auth, upload.single("avatar"), async (req, res) => {
     const buffer = await sharp(req.file.buffer).resize({
         width: 250,

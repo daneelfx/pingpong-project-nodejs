@@ -7,10 +7,12 @@ const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        minlength: 4,
         trim: true
     },
     username: {
         type: String,
+        lowercase: true,
         unique: true,
         minlength: 4,
         maxlength: 12,
@@ -39,10 +41,10 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     }]
-}, 
-{
-    timestamps: true
-})
+    }, 
+    {
+        timestamps: true
+    })
 
 userSchema.virtual("tournaments", {
     ref: "Tournament",
@@ -53,7 +55,6 @@ userSchema.virtual("tournaments", {
 userSchema.methods.toJSON = function(){
     const user = this
     const userObject = user.toObject()
-
     // delete userObject.password
     // delete userObject.tokens
 

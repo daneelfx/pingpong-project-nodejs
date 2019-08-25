@@ -18,8 +18,6 @@ const auth = async (req, res, next) => {
     }catch(error){
         res.status(401).send({error: "Please authenticate"})
     }
-
-
 }
 
 module.exports = auth

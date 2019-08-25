@@ -10,6 +10,11 @@ const tournamentSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    category: {
+        type: String,
+        required: true,
+        trim: true
+    },
     played: {
         type: Boolean,
         default: false
