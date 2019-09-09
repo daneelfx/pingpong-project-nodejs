@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
         maxlength: 12,
         trim: true
     },
-    email:{
+    email: {
         type: String,
         required: true,
         lowercase: true,
@@ -41,10 +41,10 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     }]
-    }, 
-    {
-        timestamps: true
-    })
+}, 
+{
+    timestamps: true
+})
 
 userSchema.virtual("tournaments", {
     ref: "Tournament",

@@ -17,6 +17,4 @@ app.use(express.json())
 app.use(userRouter)
 app.use(tournamentRouter)
 
-
-
 app.listen(port, () => console.log("server is running at port " + port))

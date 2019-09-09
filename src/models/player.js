@@ -33,9 +33,10 @@ const playerSchema = new mongoose.Schema({
         required: true,
         ref: "Tournament"
     }
-    }, {
-        timestamps: true
-    })
+}, 
+{
+    timestamps: true
+})
 
 const Player = mongoose.model("Player", playerSchema)
 

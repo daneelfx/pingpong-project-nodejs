@@ -97,7 +97,6 @@ const upload = multer({
         if(!file.originalname.match(/\.(jpg|jpeg|png)$/))
             return cb(new Error("upload a valid image format (jpg, jpeg or png)"))
         cb(undefined, true)
-
     }
 })
 
