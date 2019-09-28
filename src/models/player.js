@@ -11,7 +11,7 @@ const playerSchema = new mongoose.Schema({
         type: String,
         trim: true,
         validate(value){
-            if(!validator.isEmail(value)) throw new Error("Invalid Email")
+            if(!validator.isEmail(value)) throw new Error("invalid email")
         }
     },
     phone: {
